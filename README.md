@@ -2,7 +2,7 @@
 
 ### about
 
-slider functionality from `jQuery.slideToggle`, `jQuery.slideUp`, `jQuery.slideDown` but with css transition on calculated max-height. Same idea as this https://github.com/BrentonCozby/dom-slider but minimalistic. You have to apply css transition styling to your element. Inert is supported. (uses display: none when collapsed)
+slider functionality from `jQuery.slideToggle`, `jQuery.slideUp`, `jQuery.slideDown` but with CSS transition on max-height. Same idea as this https://github.com/BrentonCozby/dom-slider but minimalistic. You have to apply css transition styling to your element. Inert is supported. (uses display: none when collapsed)
 
 ### demo
 
