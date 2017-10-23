@@ -1,6 +1,6 @@
 {
   "name": "zlide",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "simple slide functions similar to jQuery api",
   "main": "dist/zlide",
   "scripts": {

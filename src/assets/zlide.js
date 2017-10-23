@@ -5,27 +5,27 @@ const TRANSITION_END = 'transitionend';
 const AEL = 'addEventListener';
 const REL = 'removeEventListener';
 
-function setToCollapsed({ element, callback }) {
+function setToCollapsed({ element, doneCallback }) {
   const el = element;
   el.style.display = 'none'; // inert
   el.setAttribute('inert', '');
   el.style.maxHeight = '0px';
-  if (callback) {
-    callback({ element: el });
+  if (doneCallback) {
+    doneCallback({ element: el });
   }
 }
 
-function setToExpanded({ element, callback }) {
+function setToExpanded({ element, doneCallback }) {
   const el = element;
   el.style.display = '';
   el.style.maxHeight = '';
   element.removeAttribute('inert');
-  if (callback) {
-    callback({ element: el });
+  if (doneCallback) {
+    doneCallback({ element: el });
   }
 }
 
-function collapse({ element, callback }) {
+function collapse({ element, doneCallback }) {
   const el = element;
   const height = element.scrollHeight;
   const elTransitionBackup = element.style.transition;
@@ -33,7 +33,7 @@ function collapse({ element, callback }) {
   const transitionEvent = (event) => {
     if (event.propertyName === 'max-height') {
       el[REL](TRANSITION_END, transitionEvent);
-      setToCollapsed({ element: el, callback });
+      setToCollapsed({ element: el, doneCallback });
     }
   };
 
@@ -47,31 +47,33 @@ function collapse({ element, callback }) {
   });
 }
 
-function expand({ element, callback }) {
+function expand({ element, doneCallback }) {
   const el = element;
   el.style.display = '';
 
   const transitionEvent = (event) => {
     if (event.propertyName === 'max-height') {
       element[REL](TRANSITION_END, transitionEvent);
-      setToExpanded({ element: el, callback });
+      setToExpanded({ element: el, doneCallback });
     }
   };
 
   element.addEventListener(TRANSITION_END, transitionEvent);
-  // Same level of nested rAF as collapse to synchronize timing of animation.
   rAF(() => {
+    /* Same level of nested rAF as collapse to synchronize timing of animation.
+     The extra rAF can be removed, but looks bad if used to build an
+     accordion component. */
     rAF(() => {
       el.style.maxHeight = `${element.scrollHeight}px`;
     });
   });
 }
 
-function toggle({ element, callback }) {
+function toggle({ element, doneCallback }) {
   if (element.style.maxHeight === '0px') {
-    expand({ element, callback });
+    expand({ element, doneCallback });
   } else {
-    collapse({ element, callback });
+    collapse({ element, doneCallback });
   }
 }
 
