@@ -6,9 +6,8 @@ slider functionaliter from jQuery.slideToggle, jQuery.slideUp, jQuery.slideDown 
 
 ### demo
 
-https://codepen.io/kunukn/pen/pWBvEo?editors=0010
-
-
+Collapsibles with inert support: https://codepen.io/kunukn/pen/pWBvEo?editors=0010
+Accordion with inert support:    https://codepen.io/kunukn/pen/xXePEv?editors=0010
 
 ### Usage example
 
@@ -18,6 +17,8 @@ Look in dist/index.html for css setup example.
 ```css
 .my-element {
   transition: max-height 200ms;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 ```
 
