@@ -6,8 +6,8 @@ slider functionality from `jQuery.slideToggle`, `jQuery.slideUp`, `jQuery.slideD
 
 ### demo
 
-Collapsibles with inert support: https://codepen.io/kunukn/full/pWBvEo
-Accordion with inert support:    https://codepen.io/kunukn/full/xXePEv
+* Collapsibles with inert support: https://codepen.io/kunukn/full/pWBvEo
+* Accordion with inert support:    https://codepen.io/kunukn/full/xXePEv
 
 ### Usage example
 
