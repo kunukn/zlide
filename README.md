@@ -2,12 +2,12 @@
 
 ### about
 
-slider functionaliter from jQuery.slideToggle, jQuery.slideUp, jQuery.slideDown but with css transition on calculated max-height. Same idea as this https://github.com/BrentonCozby/dom-slider but minimalistic. You have to add css transition styling to your element.
+slider functionality from `jQuery.slideToggle`, `jQuery.slideUp`, `jQuery.slideDown` but with css transition on calculated max-height. Same idea as this https://github.com/BrentonCozby/dom-slider but minimalistic. You have to apply css transition styling to your element. Inert is supported. (uses display: none when collapsed)
 
 ### demo
 
-Collapsibles with inert support: https://codepen.io/kunukn/pen/pWBvEo?editors=0010
-Accordion with inert support:    https://codepen.io/kunukn/pen/xXePEv?editors=0010
+Collapsibles with inert support: https://codepen.io/kunukn/full/pWBvEo
+Accordion with inert support:    https://codepen.io/kunukn/full/xXePEv
 
 ### Usage example
 
@@ -54,3 +54,8 @@ function doneCallback(props){ console.log('done, your element is available in pr
 ### cdn
 
 https://unpkg.com/zlide
+
+
+### how does it work?
+
+CSS transition on dynamically max-height value and transitionend event.
