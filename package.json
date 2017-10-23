@@ -1,0 +1,20 @@
+{
+  "name": "zlide",
+  "version": "0.0.1",
+  "description": "simple slide functions",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kunukn/zlide.git"
+  },
+  "keywords": ["slide"],
+  "author": "kunukn",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kunukn/zlide/issues"
+  },
+  "homepage": "https://github.com/kunukn/zlide#readme"
+}
