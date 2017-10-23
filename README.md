@@ -1,5 +1,11 @@
 # zlide
 
+### demo
+
+https://codepen.io/kunukn/pen/pWBvEo?editors=0010
+
+
+
 ### Usage example
 
 Look in dist/index.html for css setup example.
@@ -17,3 +23,7 @@ zlide.up({element: myElement, callback: doneCallback});
 
 zlide.toggle({element: myElement, callback: doneCallback});
 ```
+
+### cdn
+
+https://unpkg.com/zlide
