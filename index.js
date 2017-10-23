@@ -1,1 +1,1 @@
-module.exports = require('./assets/zlide').default;
+module.exports = require('./dist/zlide');
