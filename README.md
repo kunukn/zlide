@@ -15,6 +15,9 @@ Look in dist/index.html for css setup example.
 
 
 ```css
+.zlide-inert{
+  display: none !important;
+}
 .my-element {
   transition: max-height 200ms;
   padding-top: 0;
@@ -27,28 +30,40 @@ Look in dist/index.html for css setup example.
 var myElement = document.querySelector('.my-element');
 
 function doneCallback(props) {
-  console.log('done');
+  console.log('done ' + props.type);
 }
 
-zlide.down({element: myElement, doneCallback: doneCallback});
+function beforeCallback(props) {
+  console.log('doing ' + props.type);
+}
 
-zlide.up({element: myElement, doneCallback: doneCallback});
+zlide.down({element: myElement, beforeCallback, doneCallback});
 
-zlide.toggle({element: myElement, doneCallback: doneCallback});
+zlide.up({element: myElement, beforeCallback, doneCallback});
+
+zlide.toggle({element: myElement, beforeCallback, doneCallback});
 ```
 
 ### api
 
 ```javascript
 var myElement = document.querySelector('.my-element');
-function doneCallback(props){ console.log('done, your element is available in props.element') }
+
+function doneCallback(props) {
+  console.log('done ' + props.type);
+}
+
+function beforeCallback(props) {
+  console.log('doing ' + props.type);
+}
+
 ```
 
-* `zlide.up({element: myElement, doneCallback: doneCallback)` (same as `zlide.collapse`)
-* `zlide.down({element: myElement, doneCallback: doneCallback)` (same as `zlide.expand`)
-* `zlide.toggle({element: myElement, doneCallback: doneCallback)`
-* `zlide.setToCollapsed({element: myElement, doneCallback: doneCallback)`
-* `zlide.setToExpanded({element: myElement, doneCallback: doneCallback)`
+* `zlide.up({element: myElement, beforeCallback, doneCallback)` (same as `zlide.collapse`)
+* `zlide.down({element: myElement, beforeCallback, doneCallback)` (same as `zlide.expand`)
+* `zlide.toggle({element: myElement, beforeCallback, doneCallback)`
+* `zlide.setToCollapsed({element: myElement, beforeCallback, doneCallback)`
+* `zlide.setToExpanded({element: myElement, beforeCallback, doneCallback)`
 
 
 ### cdn
