@@ -5,32 +5,50 @@ const TRANSITION_END = 'transitionend';
 const AEL = 'addEventListener';
 const REL = 'removeEventListener';
 
-function setToCollapsed({ element, doneCallback }) {
+function parseProps(props) {
+  if (typeof props === 'function') {
+    return { element: props() };
+  } else if (typeof props === 'string') {
+    return { element: document.querySelector(props) };
+  }
+  return props || {};
+}
+
+function setToCollapsed(props) {
+  const { element, doneCallback } = parseProps(props);
+
   const el = element;
   el.style.display = 'none'; // inert
   el.setAttribute('inert', '');
   el.style.maxHeight = '0px';
   if (doneCallback) {
-    doneCallback({ element: el });
+    doneCallback({ type: 'collapsed' });
   }
 }
 
-function setToExpanded({ element, doneCallback }) {
+function setToExpanded(props) {
+  const { element, doneCallback } = parseProps(props);
+
   const el = element;
   el.style.display = '';
   el.style.maxHeight = '';
   element.removeAttribute('inert');
   if (doneCallback) {
-    doneCallback({ element: el });
+    doneCallback({ type: 'expanded' });
   }
 }
 
-function collapse({ element, doneCallback }) {
+function collapse(props) {
+  const { element, beforeCallback, doneCallback } = parseProps(props);
+
+  if (beforeCallback) {
+    beforeCallback({ type: 'collapsing' });
+  }
   const el = element;
   const height = element.scrollHeight;
   const elTransitionBackup = element.style.transition;
   el.style.transition = 'max-height 0s !important';
-  const transitionEvent = (event) => {
+  const transitionEvent = event => {
     if (event.propertyName === 'max-height') {
       el[REL](TRANSITION_END, transitionEvent);
       setToCollapsed({ element: el, doneCallback });
@@ -47,11 +65,16 @@ function collapse({ element, doneCallback }) {
   });
 }
 
-function expand({ element, doneCallback }) {
+function expand(props) {
+  const { element, beforeCallback, doneCallback } = parseProps(props);
+
+  if (beforeCallback) {
+    beforeCallback({ type: 'expanding' });
+  }
   const el = element;
   el.style.display = '';
 
-  const transitionEvent = (event) => {
+  const transitionEvent = event => {
     if (event.propertyName === 'max-height') {
       element[REL](TRANSITION_END, transitionEvent);
       setToExpanded({ element: el, doneCallback });
@@ -69,11 +92,12 @@ function expand({ element, doneCallback }) {
   });
 }
 
-function toggle({ element, doneCallback }) {
+function toggle(props) {
+  const { element, beforeCallback, doneCallback } = props;
   if (element.style.maxHeight === '0px') {
-    expand({ element, doneCallback });
+    expand({ element, beforeCallback, doneCallback });
   } else {
-    collapse({ element, doneCallback });
+    collapse({ element, beforeCallback, doneCallback });
   }
 }
 
