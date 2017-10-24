@@ -75,3 +75,16 @@ https://unpkg.com/zlide
 ### how does it work?
 
 CSS transition on dynamically max-height value and transitionend event.
+
+### development
+
+* git clone/download project
+* npm install
+* npm start
+* go to localhost:3000
+
+### build
+
+* npm run build
+* look in dist folder
+
