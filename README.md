@@ -18,6 +18,7 @@ Look in dist/index.html for css setup example.
 .zlide-inert{
   display: none !important;
 }
+
 .my-element {
   transition: max-height 200ms;
   padding-top: 0;
