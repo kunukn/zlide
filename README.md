@@ -72,10 +72,6 @@ function beforeCallback(props) {
 https://unpkg.com/zlide
 
 
-### how does it work?
-
-CSS transition on dynamically max-height value and transitionend event.
-
 ### development
 
 * git clone/download project
@@ -88,3 +84,7 @@ CSS transition on dynamically max-height value and transitionend event.
 * npm run build
 * look in dist folder
 
+
+### how does it work?
+
+CSS transition on dynamically max-height value and transitionend event.
