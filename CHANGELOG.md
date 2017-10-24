@@ -1,5 +1,8 @@
 ## Changelog
 
+### 0.0.5
+* update api
+
 ### 0.0.4
 * update readme
 

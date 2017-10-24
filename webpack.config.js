@@ -72,7 +72,7 @@ return {
     open: true,
     contentBase: './',
     noInfo: true,
-    port: 3399,
+    port: 3000,
     compress: isProd,
     inline: !isProd
     //hot: !isProd,

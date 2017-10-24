@@ -8,6 +8,11 @@
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
   <style>
+
+    .zlide-inert {
+      display: none !important;
+    }
+
     *,
     :before,
     :after {
@@ -76,8 +81,11 @@
     setInterval(function(){
       zlide.toggle({
         element,
-        callback: (props) => {
-          console.log(props.element.textContent.trim(), new Date());
+        beforeCallback: (props) => {
+          console.log(props.type, new Date());
+        },
+        doneCallback: (props) => {
+          console.log(props.type, new Date());
         }
       });
     }, 2000);
