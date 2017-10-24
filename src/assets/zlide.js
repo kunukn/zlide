@@ -18,7 +18,7 @@ function setToCollapsed(props) {
   const { element, doneCallback } = parseProps(props);
 
   const el = element;
-  el.style.display = 'none'; // inert
+  el.classList.add('zlide-inert');
   el.setAttribute('inert', '');
   el.style.maxHeight = '0px';
   if (doneCallback) {
@@ -72,7 +72,7 @@ function expand(props) {
     beforeCallback({ type: 'expanding' });
   }
   const el = element;
-  el.style.display = '';
+  el.classList.remove('zlide-inert');
 
   const transitionEvent = event => {
     if (event.propertyName === 'max-height') {
