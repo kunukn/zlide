@@ -13,7 +13,7 @@
     "build": "rollup -c",
     "rollup-dev": "rollup -c -w",
     "clean": "rimraf dist/*",
-    "minify-dist-umd": "uglifyjs dist/zlide.umd.js --compress  --source-map --output dist/zlide.umd.min.js",
+    "minify": "uglifyjs dist/zlide.umd.js --config-file uglify.config.json --output dist/zlide.umd.min.js",
     "pretest": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

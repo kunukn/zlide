@@ -8,12 +8,12 @@ const AEL = 'addEventListener';
 const REL = 'removeEventListener';
 
 function parseProps(props) {
-  if (typeof props === 'function') {
-    return { element: props() };
-  } else if (typeof props === 'string') {
+  if (typeof props === 'string') {
     return { element: document.querySelector(props) };
   } else if (props instanceof Element) {
     return { element: props };
+  } else if (typeof props === 'function') {
+    return { element: props() };
   }
   return props || {};
 }
@@ -97,7 +97,7 @@ function expand(props) {
 }
 
 function toggle(props) {
-  const { element, beforeCallback, doneCallback } = props;
+  const { element, beforeCallback, doneCallback } = parseProps(props);
   if (element.style.maxHeight === '0px') {
     expand({ element, beforeCallback, doneCallback });
   } else {

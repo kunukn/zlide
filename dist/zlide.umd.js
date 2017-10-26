@@ -12,12 +12,12 @@ var AEL = 'addEventListener';
 var REL = 'removeEventListener';
 
 function parseProps(props) {
-  if (typeof props === 'function') {
-    return { element: props() };
-  } else if (typeof props === 'string') {
+  if (typeof props === 'string') {
     return { element: document.querySelector(props) };
   } else if (props instanceof Element) {
     return { element: props };
+  } else if (typeof props === 'function') {
+    return { element: props() };
   }
   return props || {};
 }
@@ -111,9 +111,10 @@ function expand(props) {
 }
 
 function toggle(props) {
-  var element = props.element;
-  var beforeCallback = props.beforeCallback;
-  var doneCallback = props.doneCallback;
+  var ref = parseProps(props);
+  var element = ref.element;
+  var beforeCallback = ref.beforeCallback;
+  var doneCallback = ref.doneCallback;
   if (element.style.maxHeight === '0px') {
     expand({ element: element, beforeCallback: beforeCallback, doneCallback: doneCallback });
   } else {
