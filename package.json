@@ -9,14 +9,15 @@
     "start": "npm run dev",
     "dev": "webpack-dev-server --progress --config webpack.config.js",
     "webpack-prod": "cross-env NODE_ENV=production webpack-dev-server --env.production",
-    "webpack-build": "cross-env NODE_ENV=production webpack --env.production",
+    "webpack-build": "cross-env NODE_ENV=production webpack --env.production",    
     "build": "rollup -c",
     "rollup-dev": "rollup -c -w",
     "clean": "rimraf dist/*",
+    "minify-dist-umd": "uglifyjs dist/zlide.umd.js --compress  --source-map --output dist/zlide.umd.min.js",
     "pretest": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "files":[
+  "files": [
     "dist"
   ],
   "browserslist": "last 2 versions, ie 11",
@@ -61,12 +62,15 @@
     "file-loader": "^0.10.0",
     "html-loader": "^0.4.4",
     "html-webpack-plugin": "^2.28.0",
+    "install": "^0.10.1",
     "node-sass": "^4.5.0",
+    "npm": "^5.5.1",
     "rimraf": "^2.6.2",
     "rollup": "^0.50.0",
     "rollup-plugin-buble": "^0.16.0",
     "sass-loader": "^5.0.1",
     "style-loader": "^0.13.1",
+    "uglify-js": "^3.1.5",
     "url-loader": "^0.5.7",
     "webpack": "^2.2.1",
     "webpack-dev-server": "^2.3.0"
