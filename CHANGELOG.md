@@ -1,5 +1,8 @@
 ## Changelog
 
+### 0.0.7
+* fix bug for IE11/Edge requestAnimationFrame
+
 ### 0.0.6
 * use Rollup
 

@@ -4,16 +4,18 @@
 	(global.zlide = factory());
 }(this, (function () { 'use strict';
 
-var rAF =
-  window.requestAnimationFrame || (function (callback) { return setTimeout(callback, 0); });
+var rAF = window.requestAnimationFrame
+  ? window.requestAnimationFrame.bind(window)
+  : function (callback) { return setTimeout(callback, 0); };
 
 var TRANSITION_END = 'transitionend';
 var AEL = 'addEventListener';
 var REL = 'removeEventListener';
+var qs = function (query) { return document.querySelector(query); };
 
 function parseProps(props) {
   if (typeof props === 'string') {
-    return { element: document.querySelector(props) };
+    return { element: qs(props) };
   } else if (props instanceof Element) {
     return { element: props };
   } else if (typeof props === 'function') {
@@ -122,6 +124,15 @@ function toggle(props) {
   }
 }
 
+function applyDefaultStyleSheet() {
+  if (!qs('#zlide-stylesheet')) {
+    var sheet = document.createElement('style');
+    sheet.setAttribute('id', 'zlide-stylesheet');
+    sheet.innerHTML = '.zlide-inert{display:none !important;}';
+    document.head.appendChild(sheet);
+  }
+}
+
 var zlide = function () {};
 
 zlide.toggle = toggle;
@@ -131,6 +142,7 @@ zlide.expand = expand;
 zlide.down = expand;
 zlide.setToCollapsed = setToCollapsed;
 zlide.setToExpanded = setToExpanded;
+zlide.applyDefaultStyleSheet = applyDefaultStyleSheet;
 
 return zlide;
 

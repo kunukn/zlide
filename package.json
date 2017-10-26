@@ -1,6 +1,6 @@
 {
   "name": "zlide",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Plain JavaScript to collapse or expand an element in height",
   "main": "dist/zlide.cjs.js",
   "module": "dist/zlide.esm.js",
@@ -8,6 +8,7 @@
   "scripts": {
     "start": "npm run dev",
     "dev": "webpack-dev-server --progress --config webpack.config.js",
+    "demo": "http-server",
     "webpack-prod": "cross-env NODE_ENV=production webpack-dev-server --env.production",
     "webpack-build": "cross-env NODE_ENV=production webpack --env.production",    
     "build": "rollup -c",

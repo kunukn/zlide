@@ -1,13 +1,15 @@
-const rAF =
-  window.requestAnimationFrame || (callback => setTimeout(callback, 0));
+const rAF = window.requestAnimationFrame
+  ? window.requestAnimationFrame.bind(window)
+  : callback => setTimeout(callback, 0);
 
 const TRANSITION_END = 'transitionend';
 const AEL = 'addEventListener';
 const REL = 'removeEventListener';
+const qs = query => document.querySelector(query);
 
 function parseProps(props) {
   if (typeof props === 'string') {
-    return { element: document.querySelector(props) };
+    return { element: qs(props) };
   } else if (props instanceof Element) {
     return { element: props };
   } else if (typeof props === 'function') {
@@ -103,6 +105,15 @@ function toggle(props) {
   }
 }
 
+function applyDefaultStyleSheet() {
+  if (!qs('#zlide-stylesheet')) {
+    const sheet = document.createElement('style');
+    sheet.setAttribute('id', 'zlide-stylesheet');
+    sheet.innerHTML = '.zlide-inert{display:none !important;}';
+    document.head.appendChild(sheet);
+  }
+}
+
 const zlide = () => {};
 
 zlide.toggle = toggle;
@@ -112,5 +123,6 @@ zlide.expand = expand;
 zlide.down = expand;
 zlide.setToCollapsed = setToCollapsed;
 zlide.setToExpanded = setToExpanded;
+zlide.applyDefaultStyleSheet = applyDefaultStyleSheet;
 
 export default zlide;
