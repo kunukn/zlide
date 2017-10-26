@@ -111,5 +111,7 @@ zlide.down = expand;
 zlide.setToCollapsed = setToCollapsed;
 zlide.setToExpanded = setToExpanded;
 
-export default zlide;
+
 //module.exports = zlide;
+
+export default zlide;

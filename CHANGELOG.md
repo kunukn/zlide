@@ -1,5 +1,8 @@
 ## Changelog
 
+### 0.0.6
+* use Rollup
+
 ### 0.0.5
 * update api
 

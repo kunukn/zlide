@@ -1,15 +1,24 @@
 {
   "name": "zlide",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Plain JavaScript to collapse or expand an element in height",
-  "main": "dist/zlide",
+  "main": "dist/zlide.cjs.js",
+  "module": "dist/zlide.esm.js",
+  "browser": "dist/zlide.umd.js",
   "scripts": {
     "start": "npm run dev",
     "dev": "webpack-dev-server --progress --config webpack.config.js",
-    "prod": "cross-env NODE_ENV=production webpack-dev-server --env.production",
-    "build": "cross-env NODE_ENV=production webpack --env.production",
+    "webpack-prod": "cross-env NODE_ENV=production webpack-dev-server --env.production",
+    "webpack-build": "cross-env NODE_ENV=production webpack --env.production",
+    "build": "rollup -c",
+    "rollup-dev": "rollup -c -w",
+    "clean": "rimraf dist/*",
+    "pretest": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "files":[
+    "dist"
+  ],
   "browserslist": "last 2 versions, ie 11",
   "babel": {
     "presets": [
@@ -53,6 +62,9 @@
     "html-loader": "^0.4.4",
     "html-webpack-plugin": "^2.28.0",
     "node-sass": "^4.5.0",
+    "rimraf": "^2.6.2",
+    "rollup": "^0.50.0",
+    "rollup-plugin-buble": "^0.16.0",
     "sass-loader": "^5.0.1",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",

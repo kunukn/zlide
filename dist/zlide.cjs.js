@@ -1,3 +1,5 @@
+'use strict';
+
 const rAF =
   window.requestAnimationFrame || (callback => setTimeout(callback, 0));
 
@@ -111,5 +113,7 @@ zlide.down = expand;
 zlide.setToCollapsed = setToCollapsed;
 zlide.setToExpanded = setToExpanded;
 
-export default zlide;
+
 //module.exports = zlide;
+
+module.exports = zlide;
