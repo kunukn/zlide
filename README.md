@@ -81,7 +81,9 @@ https://unpkg.com/zlide
 
 ### build
 
+* npm run clean
 * npm run build
+* npm run minify-dist-umd
 * look in dist folder
 
 
