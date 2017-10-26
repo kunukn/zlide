@@ -69,7 +69,7 @@ function beforeCallback(props) {
 
 ### cdn
 
-https://unpkg.com/zlide
+https://unpkg.com/zlide/
 
 
 ### development
