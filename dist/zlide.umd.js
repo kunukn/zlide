@@ -16,6 +16,8 @@ function parseProps(props) {
     return { element: props() };
   } else if (typeof props === 'string') {
     return { element: document.querySelector(props) };
+  } else if (props instanceof Element) {
+    return { element: props };
   }
   return props || {};
 }
@@ -128,9 +130,6 @@ zlide.expand = expand;
 zlide.down = expand;
 zlide.setToCollapsed = setToCollapsed;
 zlide.setToExpanded = setToExpanded;
-
-
-//module.exports = zlide;
 
 return zlide;
 
