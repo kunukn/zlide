@@ -57,8 +57,7 @@ return {
   devtool: isProd ? 'source-map' : 'eval',
   context: path.resolve('./'),
   entry: {
-    zlide: ['./src/assets/zlide']
-    //zlide: ['./index']
+    zlide: ['./src/index.js']
   },
   output: {
     path: path.join(__dirname, 'dist'),
