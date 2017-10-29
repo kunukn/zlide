@@ -11,7 +11,9 @@ var rAF = window.requestAnimationFrame
 var TRANSITION_END = 'transitionend';
 var AEL = 'addEventListener';
 var REL = 'removeEventListener';
-var qs = function (query) { return document.querySelector(query); };
+var BCR = 'getBoundingClientRect';
+var qs = function (expr, context) { return (context || document).querySelector(expr); };
+var qsa = function (expr, context) { return [].slice.call((context || document).querySelectorAll(expr), 0); };
 
 function parseProps(props) {
   if (typeof props === 'string') {
@@ -19,7 +21,7 @@ function parseProps(props) {
   } else if (props instanceof Element) {
     return { element: props };
   } else if (typeof props === 'function') {
-    return { element: props() };
+    return parseProps(props());
   }
   return props || {};
 }
@@ -29,13 +31,14 @@ function setToCollapsed(props) {
   var element = ref.element;
   var doneCallback = ref.doneCallback;
 
-  var el = element;
-  el.classList.add('zlide-inert');
-  el.setAttribute('inert', '');
-  el.style.maxHeight = '0px';
+  element.classList.add('zlide-inert');
+  element.setAttribute('inert', '');
+  element.style.maxHeight = '0px';
   if (doneCallback) {
     doneCallback({ type: 'collapsed' });
   }
+
+  return this;
 }
 
 function setToExpanded(props) {
@@ -43,13 +46,14 @@ function setToExpanded(props) {
   var element = ref.element;
   var doneCallback = ref.doneCallback;
 
-  var el = element;
-  el.style.display = '';
-  el.style.maxHeight = '';
+  element.style.display = '';
+  element.style.maxHeight = '';
   element.removeAttribute('inert');
   if (doneCallback) {
     doneCallback({ type: 'expanded' });
   }
+
+  return this;
 }
 
 function collapse(props) {
@@ -61,25 +65,33 @@ function collapse(props) {
   if (beforeCallback) {
     beforeCallback({ type: 'collapsing' });
   }
-  var el = element;
-  var height = element.scrollHeight;
+
+  var rect = element[BCR]();
+
+  if (rect.height === 0) {
+    setToCollapsed({ element: element, doneCallback: doneCallback });
+    return this;
+  }
+
   var elTransitionBackup = element.style.transition;
-  el.style.transition = 'max-height 0s !important';
+  element.style.transition = 'max-height 0s !important';
   var transitionEvent = function (event) {
     if (event.propertyName === 'max-height') {
-      el[REL](TRANSITION_END, transitionEvent);
-      setToCollapsed({ element: el, doneCallback: doneCallback });
+      element[REL](TRANSITION_END, transitionEvent);
+      setToCollapsed({ element: element, doneCallback: doneCallback });
     }
   };
 
   rAF(function () {
-    el.style.maxHeight = height + "px";
-    el.style.transition = elTransitionBackup;
-    el[AEL](TRANSITION_END, transitionEvent);
+    element.style.maxHeight = (rect.height) + "px";
+    element.style.transition = elTransitionBackup;
+    element[AEL](TRANSITION_END, transitionEvent);
     rAF(function () {
-      el.style.maxHeight = '0px';
+      element.style.maxHeight = '0px';
     });
   });
+
+  return this;
 }
 
 function expand(props) {
@@ -91,23 +103,26 @@ function expand(props) {
   if (beforeCallback) {
     beforeCallback({ type: 'expanding' });
   }
-  var el = element;
-  el.classList.remove('zlide-inert');
+  element.classList.remove('zlide-inert');
 
   var transitionEvent = function (event) {
     if (event.propertyName === 'max-height') {
       element[REL](TRANSITION_END, transitionEvent);
-      setToExpanded({ element: el, doneCallback: doneCallback });
+      setToExpanded({ element: element, doneCallback: doneCallback });
     }
   };
 
+  element.style.maxHeight = '';
+
   element.addEventListener(TRANSITION_END, transitionEvent);
   rAF(function () {
-    /* Same level of nested rAF as collapse to synchronize timing of animation.
-     The extra rAF can be removed, but looks bad if used to build an
-     accordion component. */
+    /*
+      Same level of nested rAF as collapse to synchronize timing of animation.
+    */
+    var rect = element[BCR]();
+    element.style.maxHeight = '0px';
     rAF(function () {
-      el.style.maxHeight = (element.scrollHeight) + "px";
+      element.style.maxHeight = (rect.height) + "px";
     });
   });
 }
@@ -122,15 +137,17 @@ function toggle(props) {
   } else {
     collapse({ element: element, beforeCallback: beforeCallback, doneCallback: doneCallback });
   }
+  return this;
 }
 
 function applyDefaultStyleSheet() {
   if (!qs('#zlide-stylesheet')) {
     var sheet = document.createElement('style');
     sheet.setAttribute('id', 'zlide-stylesheet');
-    sheet.innerHTML = '.zlide-inert{display:none !important;}';
+    sheet.innerHTML = "\n      .zlide-inert{display:none !important;}\n    ";
     document.head.appendChild(sheet);
   }
+  return this;
 }
 
 var zlide = function () {};
@@ -143,6 +160,10 @@ zlide.down = expand;
 zlide.setToCollapsed = setToCollapsed;
 zlide.setToExpanded = setToExpanded;
 zlide.applyDefaultStyleSheet = applyDefaultStyleSheet;
+zlide.rAF = rAF;
+zlide.qs = qs;
+zlide.qsa = qsa;
+zlide.VERSION = '0.0.8';
 
 return zlide;
 

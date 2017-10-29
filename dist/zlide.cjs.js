@@ -7,7 +7,10 @@ const rAF = window.requestAnimationFrame
 const TRANSITION_END = 'transitionend';
 const AEL = 'addEventListener';
 const REL = 'removeEventListener';
-const qs = query => document.querySelector(query);
+const BCR = 'getBoundingClientRect';
+const qs = (expr, context) => (context || document).querySelector(expr);
+const qsa = (expr, context) =>
+  [].slice.call((context || document).querySelectorAll(expr), 0);
 
 function parseProps(props) {
   if (typeof props === 'string') {
@@ -15,7 +18,7 @@ function parseProps(props) {
   } else if (props instanceof Element) {
     return { element: props };
   } else if (typeof props === 'function') {
-    return { element: props() };
+    return parseProps(props());
   }
   return props || {};
 }
@@ -23,25 +26,27 @@ function parseProps(props) {
 function setToCollapsed(props) {
   const { element, doneCallback } = parseProps(props);
 
-  const el = element;
-  el.classList.add('zlide-inert');
-  el.setAttribute('inert', '');
-  el.style.maxHeight = '0px';
+  element.classList.add('zlide-inert');
+  element.setAttribute('inert', '');
+  element.style.maxHeight = '0px';
   if (doneCallback) {
     doneCallback({ type: 'collapsed' });
   }
+
+  return this;
 }
 
 function setToExpanded(props) {
   const { element, doneCallback } = parseProps(props);
 
-  const el = element;
-  el.style.display = '';
-  el.style.maxHeight = '';
+  element.style.display = '';
+  element.style.maxHeight = '';
   element.removeAttribute('inert');
   if (doneCallback) {
     doneCallback({ type: 'expanded' });
   }
+
+  return this;
 }
 
 function collapse(props) {
@@ -50,25 +55,33 @@ function collapse(props) {
   if (beforeCallback) {
     beforeCallback({ type: 'collapsing' });
   }
-  const el = element;
-  const height = element.scrollHeight;
+
+  const rect = element[BCR]();
+
+  if (rect.height === 0) {
+    setToCollapsed({ element, doneCallback });
+    return this;
+  }
+
   const elTransitionBackup = element.style.transition;
-  el.style.transition = 'max-height 0s !important';
+  element.style.transition = 'max-height 0s !important';
   const transitionEvent = event => {
     if (event.propertyName === 'max-height') {
-      el[REL](TRANSITION_END, transitionEvent);
-      setToCollapsed({ element: el, doneCallback });
+      element[REL](TRANSITION_END, transitionEvent);
+      setToCollapsed({ element, doneCallback });
     }
   };
 
   rAF(() => {
-    el.style.maxHeight = `${height}px`;
-    el.style.transition = elTransitionBackup;
-    el[AEL](TRANSITION_END, transitionEvent);
+    element.style.maxHeight = `${rect.height}px`;
+    element.style.transition = elTransitionBackup;
+    element[AEL](TRANSITION_END, transitionEvent);
     rAF(() => {
-      el.style.maxHeight = '0px';
+      element.style.maxHeight = '0px';
     });
   });
+
+  return this;
 }
 
 function expand(props) {
@@ -77,23 +90,26 @@ function expand(props) {
   if (beforeCallback) {
     beforeCallback({ type: 'expanding' });
   }
-  const el = element;
-  el.classList.remove('zlide-inert');
+  element.classList.remove('zlide-inert');
 
   const transitionEvent = event => {
     if (event.propertyName === 'max-height') {
       element[REL](TRANSITION_END, transitionEvent);
-      setToExpanded({ element: el, doneCallback });
+      setToExpanded({ element, doneCallback });
     }
   };
 
+  element.style.maxHeight = '';
+
   element.addEventListener(TRANSITION_END, transitionEvent);
   rAF(() => {
-    /* Same level of nested rAF as collapse to synchronize timing of animation.
-     The extra rAF can be removed, but looks bad if used to build an
-     accordion component. */
+    /*
+      Same level of nested rAF as collapse to synchronize timing of animation.
+    */
+    const rect = element[BCR]();
+    element.style.maxHeight = '0px';
     rAF(() => {
-      el.style.maxHeight = `${element.scrollHeight}px`;
+      element.style.maxHeight = `${rect.height}px`;
     });
   });
 }
@@ -105,15 +121,19 @@ function toggle(props) {
   } else {
     collapse({ element, beforeCallback, doneCallback });
   }
+  return this;
 }
 
 function applyDefaultStyleSheet() {
   if (!qs('#zlide-stylesheet')) {
     const sheet = document.createElement('style');
     sheet.setAttribute('id', 'zlide-stylesheet');
-    sheet.innerHTML = '.zlide-inert{display:none !important;}';
+    sheet.innerHTML = `
+      .zlide-inert{display:none !important;}
+    `;
     document.head.appendChild(sheet);
   }
+  return this;
 }
 
 const zlide = () => {};
@@ -126,5 +146,9 @@ zlide.down = expand;
 zlide.setToCollapsed = setToCollapsed;
 zlide.setToExpanded = setToExpanded;
 zlide.applyDefaultStyleSheet = applyDefaultStyleSheet;
+zlide.rAF = rAF;
+zlide.qs = qs;
+zlide.qsa = qsa;
+zlide.VERSION = '0.0.8';
 
 module.exports = zlide;

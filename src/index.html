@@ -49,10 +49,11 @@
     }
 
     .content {
+      height: 200px;
       line-height: 1.5;
       overflow: hidden;
-      -webkit-transition: max-height 300ms;
-      transition: max-height 300ms;
+      -webkit-transition: max-height 2000ms;
+      transition: max-height 2000ms;
     }
 
     .content p {
@@ -89,7 +90,7 @@
           beforeCallback: function (props) { console.log(props.type, new Date()) },
           doneCallback: function (props) { console.log(props.type, new Date()) },
         });
-      }, 2000);
+      }, 4000);
     }
 
   </script>
