@@ -63,6 +63,7 @@ function collapse(props) {
 
   const elTransitionBackup = element.style.transition;
   element.style.transition = 'max-height 0s !important';
+
   const transitionEvent = event => {
     if (event.propertyName === 'max-height') {
       element[REL](TRANSITION_END, transitionEvent);
