@@ -1,5 +1,8 @@
 ## Changelog
 
+### 0.0.8
+* use getBoundingClientRect instead of scrollHeight
+
 ### 0.0.7
 * fix bug for IE11/Edge requestAnimationFrame
 
