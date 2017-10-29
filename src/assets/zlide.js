@@ -97,6 +97,8 @@ function expand(props) {
     }
   };
 
+  const elTransitionBackup = element.style.transition;
+  element.style.transition = 'max-height 0s !important';
   element.style.maxHeight = '';
 
   element.addEventListener(TRANSITION_END, transitionEvent);
@@ -105,7 +107,9 @@ function expand(props) {
       Same level of nested rAF as collapse to synchronize timing of animation.
     */
     const rect = element[BCR]();
+    element.style.transition = elTransitionBackup;
     element.style.maxHeight = '0px';
+
     rAF(() => {
       element.style.maxHeight = `${rect.height}px`;
     });
