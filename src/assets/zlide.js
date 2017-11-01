@@ -2,6 +2,7 @@ const rAF = window.requestAnimationFrame
   ? window.requestAnimationFrame.bind(window)
   : callback => setTimeout(callback, 0);
 
+const log = console.log.bind(console);
 const TRANSITION_END = 'transitionend';
 const AEL = 'addEventListener';
 const REL = 'removeEventListener';
@@ -25,7 +26,9 @@ function setToCollapsed(props) {
   const { element, doneCallback } = parseProps(props);
 
   element.classList.add('zlide-inert');
-  element.setAttribute('inert', '');
+  element.classList.remove('zlide-collapsing');
+  element.classList.remove('zlide-expanded');
+  element.classList.add('zlide-collapsed');
   element.style.maxHeight = '0px';
   if (doneCallback) {
     doneCallback({ type: 'collapsed' });
@@ -37,9 +40,11 @@ function setToCollapsed(props) {
 function setToExpanded(props) {
   const { element, doneCallback } = parseProps(props);
 
-  element.style.display = '';
   element.style.maxHeight = '';
-  element.removeAttribute('inert');
+  element.classList.remove('zlide-inert');
+  element.classList.remove('zlide-collapsed');
+  element.classList.remove('zlide-expanding');
+  element.classList.add('zlide-expanded');
   if (doneCallback) {
     doneCallback({ type: 'expanded' });
   }
@@ -54,9 +59,11 @@ function collapse(props) {
     beforeCallback({ type: 'collapsing' });
   }
 
-  const rect = element[BCR]();
+  element.classList.remove('zlide-expanded');
+  element.classList.add('zlide-collapsing');
+  const { height } = element[BCR]();
 
-  if (rect.height === 0) {
+  if (height === 0) {
     setToCollapsed({ element, doneCallback });
     return this;
   }
@@ -72,7 +79,7 @@ function collapse(props) {
   };
 
   rAF(() => {
-    element.style.maxHeight = `${rect.height}px`;
+    element.style.maxHeight = `${height}px`;
     element.style.transition = elTransitionBackup;
     element[AEL](TRANSITION_END, transitionEvent);
     rAF(() => {
@@ -89,7 +96,10 @@ function expand(props) {
   if (beforeCallback) {
     beforeCallback({ type: 'expanding' });
   }
+
   element.classList.remove('zlide-inert');
+  element.classList.remove('zlide-collapsed');
+  element.classList.add('zlide-expanding');
 
   const transitionEvent = event => {
     if (event.propertyName === 'max-height') {
@@ -101,25 +111,25 @@ function expand(props) {
   const elTransitionBackup = element.style.transition;
   element.style.transition = 'max-height 0s !important';
   element.style.maxHeight = '';
-
+  const { height } = element[BCR]();
   element.addEventListener(TRANSITION_END, transitionEvent);
+
   rAF(() => {
     /*
       Same level of nested rAF as collapse to synchronize timing of animation.
     */
-    const rect = element[BCR]();
     element.style.transition = elTransitionBackup;
     element.style.maxHeight = '0px';
 
     rAF(() => {
-      element.style.maxHeight = `${rect.height}px`;
+      element.style.maxHeight = `${height}px`;
     });
   });
 }
 
 function toggle(props) {
   const { element, beforeCallback, doneCallback } = parseProps(props);
-  if (element.style.maxHeight === '0px') {
+  if (element.classList.contains('zlide-collapsed')) {
     expand({ element, beforeCallback, doneCallback });
   } else {
     collapse({ element, beforeCallback, doneCallback });
@@ -152,6 +162,6 @@ zlide.applyDefaultStyleSheet = applyDefaultStyleSheet;
 zlide.rAF = rAF;
 zlide.qs = qs;
 zlide.qsa = qsa;
-zlide.VERSION = '0.0.8';
+zlide.VERSION = '0.0.9';
 
 export default zlide;

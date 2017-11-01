@@ -8,89 +8,36 @@
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
   <style>
-    .zlide-inert {
-      display: none !important;
-    }
-
-    *,
-    :before,
-    :after {
-      box-sizing: border-box;
-    }
-
-    html {
-      font-size: 16px;
-    }
-
-    body {
-      font-display: swap;
-      font-family: 'Source Sans Pro', sans-serif;
-      margin: 0;
-      min-height: 100vh;
-    }
-
-    .app {
-      position: relative;
-      max-width: 320px;
-      min-height: 100vh;
-      padding: 1rem;
-      background: rgba(30, 144, 255, 0.1);
-      margin: 0 auto;
-    }
-
-    .app__header {
-      padding: 1rem 0;
-      font-weight: 300;
-      font-size: 1.5rem;
-    }
-
-    .box {
-      background: white;
-    }
-
-    .content {
-      height: 200px;
-      line-height: 1.5;
-      overflow: hidden;
-      -webkit-transition: max-height 2000ms;
-      transition: max-height 2000ms;
-    }
-
-    .content p {
-      margin: 0;
-      padding: 1rem;
-    }
   </style>
 </head>
 
 <body>
-  <div class="app">
-    <header class="app__header">zlide library demo</header>
-    <div class="box">
-      <div class="content">
-        <p>
-          content content content content content content content content content content content content
-        </p>
+    <div class="app">
+        <div class="container">
+      
+          <section class="block">
+            <div class="row">
+              <div class="box"></div>
+              <div class="box"></div>
+              <div class="box"></div>
+            </div>
+            <div class="details"></div>
+            <div class="details"></div>
+            <div class="details"></div>
+          </section>
+          
+        </div>
       </div>
-    </div>
-  </div>
-
+  
+      <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
   <script>
 
     if (!window.zlide) {
       console.error('zlide error');
     } else {
-      var element = document.querySelector(".content");
+      
 
-      zlide.toggle(element);
 
-      setInterval(function () {
-        zlide.toggle({
-          element: element,
-          beforeCallback: function (props) { console.log(props.type, new Date()) },
-          doneCallback: function (props) { console.log(props.type, new Date()) },
-        });
-      }, 4000);
     }
 
   </script>
