@@ -2,13 +2,14 @@ import zlide from './zlide';
 import $ from 'jquery';
 import './demo.scss';
 
+const log = console.log.bind(console);
 const state = {
   prev: null,
 };
 
 $(() => {
   const $container = $('.container');
-  let $copy = $('.block')
+  const $copy = $('.block')
     .last()
     .clone();
   $copy.appendTo($container);
