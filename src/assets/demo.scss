@@ -102,21 +102,24 @@ img {
   font-weight: 300;
   display: block;
   position: relative;
-  background: rgba(#fff, 0.95);
   margin: 0 1rem;
 
-  > .content {
+  .content  {
     transition: $transition;
-    //transition: max-height 0s !important;
-    height: 200px;
+    background: rgba(#fff, 0.95);
+    //height: 200px;
     position: relative;
     overflow: hidden;
     margin: 0;
+    padding: 0;
     display: flex;
-    //    flex-direction: column;
+    // flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    height: 100%;
+
+    *{
+      float: left;
+    }
   }
 
   img {

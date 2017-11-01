@@ -41,6 +41,7 @@ function setToExpanded(props) {
   const { element, doneCallback } = parseProps(props);
 
   element.style.maxHeight = '';
+  element.style.willChange = '';
   element.classList.remove('zlide-inert');
   element.classList.remove('zlide-collapsed');
   element.classList.remove('zlide-expanding');
@@ -108,23 +109,20 @@ function expand(props) {
     }
   };
 
+  element.style.willChange = 'max-height';
   const elTransitionBackup = element.style.transition;
   element.style.transition = 'max-height 0s !important';
-  element.style.position = 'absolute';
-  element.style.visibility = 'hidden';
   element.style.maxHeight = '';
   const { height } = element[BCR]();
+  // const height = element.scrollHeight;
   element.style.transition = elTransitionBackup;
   element.style.maxHeight = '0px';
 
   rAF(() => {
+    element[AEL](TRANSITION_END, transitionEvent);
     /*
       Same level of nested rAF as collapse to synchronize timing of animation.
     */
-    element[AEL](TRANSITION_END, transitionEvent);
-    element.style.position = '';
-    element.style.visibility = '';
-
     rAF(() => {
       element.style.maxHeight = `${height}px`;
     });

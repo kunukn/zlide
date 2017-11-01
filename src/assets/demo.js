@@ -1,5 +1,5 @@
 import zlide from './zlide';
-import $ from 'jquery';
+import $ from 'jquery'; // devDependency
 import './demo.scss';
 
 const log = console.log.bind(console);
