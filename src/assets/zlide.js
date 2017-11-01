@@ -112,14 +112,14 @@ function expand(props) {
   element.style.transition = 'max-height 0s !important';
   element.style.maxHeight = '';
   const { height } = element[BCR]();
-  element.addEventListener(TRANSITION_END, transitionEvent);
+  element.style.transition = elTransitionBackup;
+  element.style.maxHeight = '0px';
 
   rAF(() => {
     /*
       Same level of nested rAF as collapse to synchronize timing of animation.
     */
-    element.style.transition = elTransitionBackup;
-    element.style.maxHeight = '0px';
+    element[AEL](TRANSITION_END, transitionEvent);
 
     rAF(() => {
       element.style.maxHeight = `${height}px`;
