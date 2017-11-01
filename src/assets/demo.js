@@ -26,7 +26,7 @@ $(() => {
   $copy.clone().appendTo($container);
 
   zlide.rAF(() => {
-    $('.details > .content').each((i, el) => {
+    $('.details').each((i, el) => {
       zlide.setToCollapsed({
         beforeCallback: props => (el.style.display = 'none  !important'),
         doneCallback: props => (el.style.display = ''),
@@ -40,7 +40,7 @@ $(() => {
     let $box = $(el);
     let number = i + 1;
     $box.attr('data-box', number);
-    $box.addClass('box--' + number);
+    //$box.addClass('box--' + number);
     $box.html(`<p>item ${number}</p>`);
   });
 
@@ -48,19 +48,19 @@ $(() => {
     let $details = $(el);
     let number = i + 1;
     $details.attr('data-details', number);
-    $details.addClass('details--' + number);
-    $details.html(`<div class="content">
-  <p>
-  details ${number}
-  </p>
-  <img src='https://images.unsplash.com/photo-1429087969512-1e85aab2683d?ixlib=rb-0.3.5&q=85&fm=jpg&crop=entropy&cs=srgb&s=212fa0707ebff5a371442c8f4242d600'/>
-  </div>`);
+    //$details.addClass('details--' + number);
+    $details.html(`
+    <div class="content">
+        <p>details ${number}</p>
+        <img src='https://images.unsplash.com/photo-1429087969512-1e85aab2683d?ixlib=rb-0.3.5&q=85&fm=jpg&crop=entropy&cs=srgb&s=212fa0707ebff5a371442c8f4242d600'/>
+    </div>
+    `);
   });
 
-  $('.block').each((blockIndex, block) => {
-    let $block = $(block);
-    $block.addClass('block--' + (blockIndex + 1));
-  });
+  // $('.block').each((blockIndex, block) => {
+  //   let $block = $(block);
+  //   $block.addClass('block--' + (blockIndex + 1));
+  // });
 
   $('.box').each((i, el) => {
     let $box = $(el);
@@ -74,7 +74,7 @@ $(() => {
       let $block = $box.closest('.block').first();
       let number = $box.attr('data-box');
       let $details = $block.find('[data-details=' + number + ']').first();
-      let $content = $details.find('.content').first();
+      //let $content = $details.find('.content').first();
 
       $box.toggleClass('is-active');
 
@@ -84,18 +84,18 @@ $(() => {
         doneCallback: props => {
           $container.attr('data-zlide-ready', '1');
         },
-        element: $content[0],
+        element: $details[0],
       });
 
       if (state.prev && number !== state.prev) {
         let $prevDetails = $('[data-details=' + state.prev + ']').first();
-        let $prevContent = $prevDetails.find('.content').first();
+        //let $prevContent = $prevDetails.find('.content').first();
 
-        if (!$prevContent.hasClass('zlide-inert')) {
+        if ($prevDetails.hasClass('zlide-expanded')) {
           zlide.toggle({
             beforeCallback: () => {},
             doneCallback: () => {},
-            element: $prevContent[0],
+            element: $prevDetails[0],
           });
           $('[data-box=' + state.prev + ']')
             .first()

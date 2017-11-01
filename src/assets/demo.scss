@@ -1,4 +1,4 @@
-$transition: 400ms cubic-bezier(0.4, 0.0, 0.2, 1);;
+$transition: 400ms cubic-bezier(0.4, 0.0, 0.2, 1);
 
 .zlide-inert{
   display: none !important;
@@ -103,23 +103,18 @@ img {
   display: block;
   position: relative;
   margin: 0 1rem;
+  padding: 0;
+  transition: $transition;
+  overflow: hidden;
 
-  .content  {
-    transition: $transition;
-    background: rgba(#fff, 0.95);
-    //height: 200px;
+  .content {
     position: relative;
-    overflow: hidden;
-    margin: 0;
-    padding: 0;
     display: flex;
+    height: 200px;
     // flex-direction: column;
     justify-content: space-between;
     align-items: center;
-
-    *{
-      float: left;
-    }
+    background: rgba(#fff, 0.95);
   }
 
   img {
@@ -134,7 +129,7 @@ img {
   }
 
   &:nth-of-type(2) {
-    > .content {
+     .content {
       height: 250px;
       img {
         filter: hue-rotate(180deg);
@@ -142,7 +137,7 @@ img {
     }
   }
   &:nth-of-type(3) {
-    > .content {
+     .content {
       height: 300px;
       //     filter: invert(1);
       img {
