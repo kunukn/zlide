@@ -91,7 +91,7 @@ $(() => {
         let $prevDetails = $('[data-details=' + state.prev + ']').first();
         //let $prevContent = $prevDetails.find('.content').first();
 
-        if ($prevDetails.hasClass('zlide-expanded')) {
+        if (!$prevDetails.hasClass('zlide-inert')) {
           zlide.toggle({
             beforeCallback: () => {},
             doneCallback: () => {},

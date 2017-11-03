@@ -1,5 +1,8 @@
 ## Changelog
 
+### 0.0.9
+* fix calculation timing for iOS
+
 ### 0.0.7
 * fix bug for IE11/Edge requestAnimationFrame
 
