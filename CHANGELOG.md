@@ -1,5 +1,8 @@
 ## Changelog
 
+### 0.0.11
+* support nodejs SSR
+
 ### 0.0.10
 * update demo
 

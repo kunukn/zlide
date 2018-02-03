@@ -1,8 +1,8 @@
+import $ from 'jquery'; // eslint-disable-line import/no-extraneous-dependencies
 import zlide from './zlide';
-import $ from 'jquery'; // devDependency
 import './demo.scss';
 
-const log = console.log.bind(console);
+const log = console.log.bind(console); // eslint-disable-line no-console
 const state = {
   prev: null,
 };
@@ -37,22 +37,26 @@ $(() => {
   });
 
   $('.box').each((i, el) => {
-    let $box = $(el);
-    let number = i + 1;
+    const $box = $(el);
+    const number = i + 1;
     $box.attr('data-box', number);
-    //$box.addClass('box--' + number);
-    $box.html(`<p>item ${number}</p>`);
+    // $box.addClass('box--' + number);
+    $box.html(`<span>item ${number}</span>`);
   });
 
   $('.details').each((i, el) => {
-    let $details = $(el);
-    let number = i + 1;
+    const $details = $(el);
+    const number = i + 1;
     $details.attr('data-details', number);
-    //$details.addClass('details--' + number);
+    // $details.addClass('details--' + number);
     $details.html(`
     <div class="content">
-        <p>details ${number}</p>
+        <div>
+          <p>details ${number}</p>
+          <button>a button</button>
+        </div>
         <img src='https://images.unsplash.com/photo-1429087969512-1e85aab2683d?ixlib=rb-0.3.5&q=85&fm=jpg&crop=entropy&cs=srgb&s=212fa0707ebff5a371442c8f4242d600'/>
+        
     </div>
     `);
   });
@@ -63,9 +67,9 @@ $(() => {
   // });
 
   $('.box').each((i, el) => {
-    let $box = $(el);
+    const $box = $(el);
     $box.click(e => {
-      let isReady = $container.attr('data-zlide-ready');
+      const isReady = $container.attr('data-zlide-ready');
       if (isReady !== '1') {
         log('not ready');
         return;
@@ -74,7 +78,7 @@ $(() => {
       let $block = $box.closest('.block').first();
       let number = $box.attr('data-box');
       let $details = $block.find('[data-details=' + number + ']').first();
-      //let $content = $details.find('.content').first();
+      // let $content = $details.find('.content').first();
 
       $box.toggleClass('is-active');
 
@@ -89,7 +93,7 @@ $(() => {
 
       if (state.prev && number !== state.prev) {
         let $prevDetails = $('[data-details=' + state.prev + ']').first();
-        //let $prevContent = $prevDetails.find('.content').first();
+        // let $prevContent = $prevDetails.find('.content').first();
 
         if (!$prevDetails.hasClass('zlide-inert')) {
           zlide.toggle({
