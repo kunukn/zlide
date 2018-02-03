@@ -1,4 +1,4 @@
 dist/*
 webpack.config.js
+demo.js
 uglify.js
-

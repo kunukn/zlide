@@ -1,8 +1,8 @@
-import $ from 'jquery'; // eslint-disable-line import/no-extraneous-dependencies
+import $ from 'jquery';
 import zlide from './zlide';
 import './demo.scss';
 
-const log = console.log.bind(console); // eslint-disable-line no-console
+const log = console.log.bind(console);
 const state = {
   prev: null,
 };
@@ -27,9 +27,9 @@ $(() => {
 
   zlide.rAF(() => {
     $('.details').each((i, el) => {
+      el.style.display = 'none  !important';
       zlide.setToCollapsed({
-        beforeCallback: props => (el.style.display = 'none  !important'),
-        doneCallback: props => (el.style.display = ''),
+        doneCallback: () => el.style.display = '',
         element: el,
       });
     });
@@ -51,12 +51,11 @@ $(() => {
     // $details.addClass('details--' + number);
     $details.html(`
     <div class="content">
-        <div>
+        <div class="content__body">
           <p>details ${number}</p>
           <button>a button</button>
         </div>
         <img src='https://images.unsplash.com/photo-1429087969512-1e85aab2683d?ixlib=rb-0.3.5&q=85&fm=jpg&crop=entropy&cs=srgb&s=212fa0707ebff5a371442c8f4242d600'/>
-        
     </div>
     `);
   });
