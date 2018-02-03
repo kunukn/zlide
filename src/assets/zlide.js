@@ -3,7 +3,6 @@ const rAF = window.requestAnimationFrame
   : callback => setTimeout(callback, 0);
 const rAF2 = callback => rAF(() => rAF(callback));
 
-const log = console.log.bind(console);
 const TRANSITION_END = 'transitionend';
 const AEL = 'addEventListener';
 const REL = 'removeEventListener';
@@ -111,7 +110,7 @@ function expand(props) {
 
     element.style.maxHeight = '';
     const { height } = element[BCR]();
-    //const height = element.scrollHeight;
+    // const height = element.scrollHeight;
     element.style.maxHeight = '0px';
 
     element.style.transition = elTransitionBackup;

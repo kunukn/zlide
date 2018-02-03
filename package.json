@@ -1,6 +1,6 @@
 {
   "name": "zlide",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Plain JavaScript to collapse or expand an element in height",
   "main": "dist/zlide.cjs.js",
   "module": "dist/zlide.esm.js",
@@ -16,7 +16,8 @@
     "clean": "rimraf dist/*",
     "minify": "uglifyjs dist/zlide.umd.js --config-file uglify.config.json --output dist/zlide.umd.min.js",
     "pretest": "npm run build",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy": "npm run clean && npm run build && npm run minify"
   },
   "files": [
     "dist"

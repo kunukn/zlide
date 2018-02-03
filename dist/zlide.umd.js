@@ -9,7 +9,6 @@ var rAF = window.requestAnimationFrame
   : function (callback) { return setTimeout(callback, 0); };
 var rAF2 = function (callback) { return rAF(function () { return rAF(callback); }); };
 
-var log = console.log.bind(console);
 var TRANSITION_END = 'transitionend';
 var AEL = 'addEventListener';
 var REL = 'removeEventListener';
@@ -128,7 +127,7 @@ function expand(props) {
     element.style.maxHeight = '';
     var ref = element[BCR]();
     var height = ref.height;
-    //const height = element.scrollHeight;
+    // const height = element.scrollHeight;
     element.style.maxHeight = '0px';
 
     element.style.transition = elTransitionBackup;
