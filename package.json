@@ -1,6 +1,6 @@
 {
   "name": "zlide",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "Plain JavaScript to collapse or expand an element in height",
   "main": "dist/zlide.cjs.js",
   "module": "dist/zlide.esm.js",

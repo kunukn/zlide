@@ -1,5 +1,8 @@
 ## Changelog
 
+### 0.0.10
+* update demo
+
 ### 0.0.9
 * fix calculation timing for iOS
 
