@@ -1,7 +1,8 @@
 'use strict';
 
-const rAF = window.requestAnimationFrame
-  ? window.requestAnimationFrame.bind(window)
+const root = typeof window !== 'undefined' ? window : global;
+const rAF = root.requestAnimationFrame
+  ? root.requestAnimationFrame.bind(root)
   : callback => setTimeout(callback, 0);
 const rAF2 = callback => rAF(() => rAF(callback));
 

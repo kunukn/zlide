@@ -4,8 +4,9 @@
 	(global.zlide = factory());
 }(this, (function () { 'use strict';
 
-var rAF = window.requestAnimationFrame
-  ? window.requestAnimationFrame.bind(window)
+var root = typeof window !== 'undefined' ? window : global;
+var rAF = root.requestAnimationFrame
+  ? root.requestAnimationFrame.bind(root)
   : function (callback) { return setTimeout(callback, 0); };
 var rAF2 = function (callback) { return rAF(function () { return rAF(callback); }); };
 
