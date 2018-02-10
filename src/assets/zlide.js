@@ -56,15 +56,15 @@ function collapse(props) {
     beforeCallback({ type: 'collapsing' });
   }
 
-  const { height } = element[BCR]();
+  const elTransitionBackup = element.style.transition;
+  element.style.transition = 'max-height 0s !important';
+
+  const { height } = element[BCR](); // trigger reflow, applies style updates
 
   if (height === 0) {
     setToCollapsed({ element, doneCallback });
     return this;
   }
-
-  const elTransitionBackup = element.style.transition;
-  element.style.transition = 'max-height 0s !important';
 
   const transitionEvent = event => {
     if (event.propertyName === 'max-height') {
@@ -109,9 +109,10 @@ function expand(props) {
       Same level of nested rAF as collapse to synchronize timing of animation.
     */
 
-    element.style.maxHeight = '';
-    const { height } = element[BCR]();
+    element.style.maxHeight = null;
+    const { height } = element[BCR](); // trigger reflow
     // const height = element.scrollHeight;
+
     element.style.maxHeight = '0px';
 
     element.style.transition = elTransitionBackup;
